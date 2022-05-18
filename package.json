@@ -1,0 +1,29 @@
+{
+  "name": "cmgt_thegame-code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html --dist-dir docs",
+    "build": "parcel build src/index.html --dist-dir docs --public-url ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmgt-thegame/cmgt_thegame-code.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmgt-thegame/cmgt_thegame-code/issues"
+  },
+  "homepage": "https://github.com/cmgt-thegame/cmgt_thegame-code#readme",
+  "dependencies": {
+    "pixi.js": "^6.3.2"
+  },
+  "devDependencies": {
+    "parcel": "^2.5.0",
+    "querystring-es3": "^0.2.1",
+    "typescript": "^4.6.4"
+  }
+}
