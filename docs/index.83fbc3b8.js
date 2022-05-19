@@ -530,25 +530,113 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _pixiJs = require("pixi.js");
 var _playerLuukPng = require("./img/player_luuk.png");
 var _playerLuukPngDefault = parcelHelpers.interopDefault(_playerLuukPng);
-// create a pixi canvas
-const pixi = new _pixiJs.Application({
+// create a app canvas
+const app = new _pixiJs.Application({
     backgroundColor: 0x372840,
     width: 1440,
     height: 900
 });
-document.body.appendChild(pixi.view);
+document.body.appendChild(app.view);
 // preload all our textures
 const loader = new _pixiJs.Loader();
 loader.add('playerTexture', _playerLuukPngDefault.default);
 loader.load(()=>loadCompleted()
 );
 // after loading is complete, create a fish sprite
+let player;
+const textStyle = new _pixiJs.TextStyle({
+    fontSize: 32,
+    fill: '#dfeded'
+});
 function loadCompleted() {
-    let player = new _pixiJs.Sprite(loader.resources["playerTexture"].texture);
-    pixi.stage.addChild(player);
+    player = new _pixiJs.Sprite(loader.resources["playerTexture"].texture);
+    player.x = 200;
+    player.y = 200;
+    const basicText = new _pixiJs.Text(`XP: 0 Sleepbar: 10/10`, textStyle);
+    basicText.x = 50;
+    basicText.y = 30;
+    const graphics = new _pixiJs.Graphics();
+    graphics.beginFill(0x524a63);
+    graphics.drawRect(40, 20, 500, 60);
+    graphics.endFill();
+    app.stage.addChild(graphics);
+    app.stage.addChild(basicText);
+    app.stage.addChild(player);
+    app.ticker.add((delta)=>update(delta)
+    );
+}
+function update(delta) {
+    player.x += 0.5 * delta;
 }
 
-},{"pixi.js":"dsYej","./img/player_luuk.png":"aOPl3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"./img/player_luuk.png":"aOPl3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","pixi.js":"dsYej"}],"aOPl3":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('FLaer') + "player_luuk.22678a98.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp|(chrome|moz)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp|(chrome|moz)-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp|(chrome|moz)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -988,37 +1076,7 @@ parcelHelpers.defineInteropFlag(exports);
 }
 exports.default = finallyConstructor;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"iCseJ":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iCseJ":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 function allSettled(arr) {
@@ -37063,43 +37121,6 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aOPl3":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('FLaer') + "player_luuk.22678a98.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ('' + err.stack).match(/(https?|file|ftp|(chrome|moz)-extension):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return '/';
-}
-function getBaseURL(url) {
-    return ('' + url).replace(/^((?:https?|file|ftp|(chrome|moz)-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ('' + url).match(/(https?|file|ftp|(chrome|moz)-extension):\/\/[^/]+/);
-    if (!matches) throw new Error('Origin not found');
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}]},["fCkIi","kuM8f"], "kuM8f", "parcelRequire216e")
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fCkIi","kuM8f"], "kuM8f", "parcelRequire216e")
 
 //# sourceMappingURL=index.83fbc3b8.js.map
