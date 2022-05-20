@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 
-import playerImage from "./img/player_luuk.png"
+import playerImage from "../img/player_luuk.png"
 
 
 // create a app canvas

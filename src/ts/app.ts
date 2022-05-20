@@ -1,11 +1,13 @@
 import * as PIXI from 'pixi.js'
 
-import playerImage from "./img/player_luuk.png"
+import playerImage from "../img/player_luuk.png"
+import robotImage from "../img/robot.png"
 
 export class Game {
-    app : PIXI.Application
+    public app : PIXI.Application
     loader : PIXI.Loader
 
+    robots : PIXI.Sprite[] = []
     xp : number
     player : PIXI.Sprite
     basicText : PIXI.Text
@@ -20,25 +22,37 @@ export class Game {
         this.loader = new PIXI.Loader()
         this.loader
             .add('playerTexture', playerImage)
-        this.loader.load(()=>this.loadCompleted())
+            .add('robotTexture', robotImage)
+        this.loader.load(()=>this.startGame())
     }
 
-    loadCompleted() {
-        console.log("all textures loaded")
-
-        this.startGame()
-        this.app.ticker.add((delta) => this.update(delta))
-    }
-    startGame() {
+    public startGame() {
         console.log("starting the game")
 
         this.xp = 1
         this.showXP()
 
+        for (let i = 0; i < 10; i++) {
+            let robot = new PIXI.Sprite(this.loader.resources["robotTexture"].texture!)
+            this.app.stage.addChild(robot)
+            robot.x = Math.random()*1000
+            robot.y = Math.random()*500
+            robot.scale.x = 0.5
+            robot.scale.y = 0.5
+            this.robots.push(robot)
+        }
+
         this.player = new PIXI.Sprite(this.loader.resources["playerTexture"].texture!)
         this.player.x = 200
         this.player.y = 200
+        this.app.stage.addChild(this.player);
 
+        this.graphics = new PIXI.Graphics()
+        this.graphics.beginFill(0x524a63)
+        this.graphics.drawRect(40, 20, 500, 60)
+        this.graphics.endFill()
+        this.app.stage.addChild(this.graphics)
+        
         this.textStyle = new PIXI.TextStyle({
             fontSize: 32,
             fill: '#dfeded'
@@ -46,28 +60,18 @@ export class Game {
         this.basicText = new PIXI.Text(`XP: 0 Sleepbar: 10/10`, this.textStyle)
         this.basicText.x = 50
         this.basicText.y = 30
-
-        this.graphics = new PIXI.Graphics()
-        this.graphics.beginFill(0x524a63)
-        this.graphics.drawRect(40, 20, 500, 60)
-        this.graphics.endFill()
-        
-        this.app.stage.addChild(this.graphics)
-
         this.app.stage.addChild(this.basicText);
-        this.app.stage.addChild(this.player);
 
+
+        this.app.ticker.add((delta) => this.update(delta))
     }
-    update(delta : number) {
-        console.log(`Dit is de Game Loop!`)
+    private update(delta : number) {
         this.player.x += 0.5 * delta
     }
 
     showXP() {
         console.log(this.xp)
     }
-
-    
 }
 
 new Game()

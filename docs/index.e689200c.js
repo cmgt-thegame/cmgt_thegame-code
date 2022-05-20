@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"fCkIi":[function(require,module,exports) {
+})({"jpJwA":[function(require,module,exports) {
 "use strict";
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "07d86a3e83fbc3b8";
+module.bundle.HMR_BUNDLE_ID = "6bb96a10e689200c";
 function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -525,15 +525,18 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"kuM8f":[function(require,module,exports) {
+},{}],"dPB9w":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Game", ()=>Game
 );
 var _pixiJs = require("pixi.js");
-var _playerLuukPng = require("./img/player_luuk.png");
+var _playerLuukPng = require("../img/player_luuk.png");
 var _playerLuukPngDefault = parcelHelpers.interopDefault(_playerLuukPng);
+var _robotPng = require("../img/robot.png");
+var _robotPngDefault = parcelHelpers.interopDefault(_robotPng);
 class Game {
+    robots = [];
     constructor(){
         // create a app canvas
         this.app = new _pixiJs.Application({
@@ -544,7 +547,7 @@ class Game {
         document.body.appendChild(this.app.view);
         // preload all our textures
         this.loader = new _pixiJs.Loader();
-        this.loader.add('playerTexture', _playerLuukPngDefault.default);
+        this.loader.add('playerTexture', _playerLuukPngDefault.default).add('robotTexture', _robotPngDefault.default);
         this.loader.load(()=>this.startGame()
         );
     }
@@ -552,9 +555,24 @@ class Game {
         console.log("starting the game");
         this.xp = 1;
         this.showXP();
+        for(let i = 0; i < 10; i++){
+            let robot = new _pixiJs.Sprite(this.loader.resources["robotTexture"].texture);
+            this.app.stage.addChild(robot);
+            robot.x = Math.random() * 1000;
+            robot.y = Math.random() * 500;
+            robot.scale.x = 0.5;
+            robot.scale.y = 0.5;
+            this.robots.push(robot);
+        }
         this.player = new _pixiJs.Sprite(this.loader.resources["playerTexture"].texture);
         this.player.x = 200;
         this.player.y = 200;
+        this.app.stage.addChild(this.player);
+        this.graphics = new _pixiJs.Graphics();
+        this.graphics.beginFill(0x524a63);
+        this.graphics.drawRect(40, 20, 500, 60);
+        this.graphics.endFill();
+        this.app.stage.addChild(this.graphics);
         this.textStyle = new _pixiJs.TextStyle({
             fontSize: 32,
             fill: '#dfeded'
@@ -562,13 +580,7 @@ class Game {
         this.basicText = new _pixiJs.Text(`XP: 0 Sleepbar: 10/10`, this.textStyle);
         this.basicText.x = 50;
         this.basicText.y = 30;
-        this.graphics = new _pixiJs.Graphics();
-        this.graphics.beginFill(0x524a63);
-        this.graphics.drawRect(40, 20, 500, 60);
-        this.graphics.endFill();
-        this.app.stage.addChild(this.graphics);
         this.app.stage.addChild(this.basicText);
-        this.app.stage.addChild(this.player);
         this.app.ticker.add((delta)=>this.update(delta)
         );
     }
@@ -581,37 +593,7 @@ class Game {
 }
 new Game();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","pixi.js":"dsYej","./img/player_luuk.png":"aOPl3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../img/player_luuk.png":"7kAqu","../img/robot.png":"gK0lW"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -1051,7 +1033,37 @@ parcelHelpers.defineInteropFlag(exports);
 }
 exports.default = finallyConstructor;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iCseJ":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"iCseJ":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 function allSettled(arr) {
@@ -37096,8 +37108,8 @@ function __extends(d, b) {
     return AnimatedSprite1;
 }(_sprite.Sprite);
 
-},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aOPl3":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('FLaer') + "player_luuk.22678a98.png" + "?" + Date.now();
+},{"@pixi/core":"7PEF8","@pixi/sprite":"9mbxh","@pixi/ticker":"8ekG7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7kAqu":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('9fpEA') + "player_luuk.22678a98.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -37133,6 +37145,9 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}]},["fCkIi","kuM8f"], "kuM8f", "parcelRequire216e")
+},{}],"gK0lW":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('9fpEA') + "robot.95a759fb.png" + "?" + Date.now();
 
-//# sourceMappingURL=index.83fbc3b8.js.map
+},{"./helpers/bundle-url":"lgJ39"}]},["jpJwA","dPB9w"], "dPB9w", "parcelRequire216e")
+
+//# sourceMappingURL=index.e689200c.js.map
