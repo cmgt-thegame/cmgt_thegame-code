@@ -40,10 +40,29 @@ function loadCompleted() {
 
     app.stage.addChild(basicText);
     app.stage.addChild(player);
-    
+
     app.ticker.add((delta : number) => update(delta))
 }
 
 function update(delta : number) {
     player.x += 0.5 * delta
 }
+
+export class Game {
+    pixi : PIXI.Application
+    loader : PIXI.Loader
+
+    xp = 0;
+    constructor() {
+        this.xp = 1
+        this.showXP()
+    }
+    showXP() {
+        console.log(this.xp)
+    }
+    startGame() {
+        console.log("starting the game")
+    }
+}
+
+new Game()

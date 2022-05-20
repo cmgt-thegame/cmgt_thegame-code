@@ -527,6 +527,9 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"kuM8f":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Game", ()=>Game
+);
 var _pixiJs = require("pixi.js");
 var _playerLuukPng = require("./img/player_luuk.png");
 var _playerLuukPngDefault = parcelHelpers.interopDefault(_playerLuukPng);
@@ -568,6 +571,20 @@ function loadCompleted() {
 function update(delta) {
     player.x += 0.5 * delta;
 }
+class Game {
+    xp = 0;
+    constructor(){
+        this.xp = 1;
+        this.showXP();
+    }
+    showXP() {
+        console.log(this.xp);
+    }
+    startGame() {
+        console.log("starting the game");
+    }
+}
+new Game();
 
 },{"./img/player_luuk.png":"aOPl3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","pixi.js":"dsYej"}],"aOPl3":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('FLaer') + "player_luuk.22678a98.png" + "?" + Date.now();
