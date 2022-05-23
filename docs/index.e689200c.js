@@ -531,6 +531,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Game", ()=>Game
 );
 var _pixiJs = require("pixi.js");
+var _player = require("./Player");
 var _playerLuukPng = require("../img/player_luuk.png");
 var _playerLuukPngDefault = parcelHelpers.interopDefault(_playerLuukPng);
 var _robotPng = require("../img/robot.png");
@@ -565,11 +566,7 @@ class Game {
             robot.scale.y = 5;
             this.robots.push(robot);
         }
-        this.player = new _pixiJs.Sprite(this.loader.resources["playerTexture"].texture);
-        this.player.x = 200;
-        this.player.y = 200;
-        this.player.scale.x = 0.5;
-        this.player.scale.y = 0.5;
+        this.player = new _player.Player(this.loader.resources["playerTexture"].texture);
         this.app.stage.addChild(this.player);
         this.graphics = new _pixiJs.Graphics();
         this.graphics.beginFill(0x524a63);
@@ -588,7 +585,7 @@ class Game {
         );
     }
     update(delta) {
-        this.player.x += 0.5 * delta;
+        this.player.update(delta);
     }
     showXP() {
         console.log(this.xp);
@@ -596,7 +593,7 @@ class Game {
 }
 new Game();
 
-},{"pixi.js":"dsYej","../img/player_luuk.png":"7kAqu","../img/robot.png":"gK0lW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","../img/player_luuk.png":"7kAqu","../img/robot.png":"gK0lW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Player":"jcdvt"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37151,6 +37148,26 @@ exports.getOrigin = getOrigin;
 },{}],"gK0lW":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('9fpEA') + "robot.95a759fb.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}]},["jpJwA","dPB9w"], "dPB9w", "parcelRequire216e")
+},{"./helpers/bundle-url":"lgJ39"}],"jcdvt":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Player", ()=>Player
+);
+var _pixiJs = require("pixi.js");
+class Player extends _pixiJs.Sprite {
+    constructor(texture){
+        super(texture);
+        this.x = 200;
+        this.y = 200;
+        this.scale.x = 0.5;
+        this.scale.y = 0.5;
+    }
+    update(delta) {
+        console.log("player update");
+        this.x += 0.5 * delta;
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["jpJwA","dPB9w"], "dPB9w", "parcelRequire216e")
 
 //# sourceMappingURL=index.e689200c.js.map

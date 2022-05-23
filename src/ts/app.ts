@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js'
 
+import { Player } from './Player'
+
 import playerImage from "../img/player_luuk.png"
 import robotImage from "../img/robot.png"
 
@@ -12,7 +14,7 @@ export class Game {
 
     robots : PIXI.Sprite[] = []
     xp : number
-    player : PIXI.Sprite
+    player : Player
     basicText : PIXI.Text
     graphics : PIXI.Graphics
     textStyle : PIXI.TextStyle
@@ -45,11 +47,7 @@ export class Game {
             this.robots.push(robot)
         }
 
-        this.player = new PIXI.Sprite(this.loader.resources["playerTexture"].texture!)
-        this.player.x = 200
-        this.player.y = 200
-        this.player.scale.x = 0.5
-        this.player.scale.y = 0.5
+        this.player = new Player(this.loader.resources["playerTexture"].texture!)
         this.app.stage.addChild(this.player);
 
         this.graphics = new PIXI.Graphics()
@@ -71,7 +69,7 @@ export class Game {
         this.app.ticker.add((delta) => this.update(delta))
     }
     private update(delta : number) {
-        this.player.x += 0.5 * delta
+        this.player.update(delta)
     }
 
     showXP() {
