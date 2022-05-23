@@ -535,13 +535,14 @@ var _playerLuukPng = require("../img/player_luuk.png");
 var _playerLuukPngDefault = parcelHelpers.interopDefault(_playerLuukPng);
 var _robotPng = require("../img/robot.png");
 var _robotPngDefault = parcelHelpers.interopDefault(_robotPng);
+_pixiJs.settings.SCALE_MODE = _pixiJs.SCALE_MODES.NEAREST;
 class Game {
     robots = [];
     constructor(){
         // create a app canvas
         this.app = new _pixiJs.Application({
             backgroundColor: 0x372840,
-            width: 1440,
+            width: 1800,
             height: 900
         });
         document.body.appendChild(this.app.view);
@@ -560,13 +561,15 @@ class Game {
             this.app.stage.addChild(robot);
             robot.x = Math.random() * 1000;
             robot.y = Math.random() * 500;
-            robot.scale.x = 0.5;
-            robot.scale.y = 0.5;
+            robot.scale.x = 5;
+            robot.scale.y = 5;
             this.robots.push(robot);
         }
         this.player = new _pixiJs.Sprite(this.loader.resources["playerTexture"].texture);
         this.player.x = 200;
         this.player.y = 200;
+        this.player.scale.x = 0.5;
+        this.player.scale.y = 0.5;
         this.app.stage.addChild(this.player);
         this.graphics = new _pixiJs.Graphics();
         this.graphics.beginFill(0x524a63);
@@ -593,7 +596,7 @@ class Game {
 }
 new Game();
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../img/player_luuk.png":"7kAqu","../img/robot.png":"gK0lW"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","../img/player_luuk.png":"7kAqu","../img/robot.png":"gK0lW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils

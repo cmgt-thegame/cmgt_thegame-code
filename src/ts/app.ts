@@ -3,9 +3,12 @@ import * as PIXI from 'pixi.js'
 import playerImage from "../img/player_luuk.png"
 import robotImage from "../img/robot.png"
 
+PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+
 export class Game {
     public app : PIXI.Application
     loader : PIXI.Loader
+    
 
     robots : PIXI.Sprite[] = []
     xp : number
@@ -15,7 +18,7 @@ export class Game {
     textStyle : PIXI.TextStyle
     constructor() {
         // create a app canvas
-        this.app = new PIXI.Application({ backgroundColor: 0x372840, width: 1440, height: 900 })
+        this.app = new PIXI.Application({ backgroundColor: 0x372840, width: 1800, height: 900 })
         document.body.appendChild(this.app.view)
 
         // preload all our textures
@@ -37,14 +40,16 @@ export class Game {
             this.app.stage.addChild(robot)
             robot.x = Math.random()*1000
             robot.y = Math.random()*500
-            robot.scale.x = 0.5
-            robot.scale.y = 0.5
+            robot.scale.x = 5
+            robot.scale.y = 5
             this.robots.push(robot)
         }
 
         this.player = new PIXI.Sprite(this.loader.resources["playerTexture"].texture!)
         this.player.x = 200
         this.player.y = 200
+        this.player.scale.x = 0.5
+        this.player.scale.y = 0.5
         this.app.stage.addChild(this.player);
 
         this.graphics = new PIXI.Graphics()
