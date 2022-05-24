@@ -23,6 +23,8 @@ npm run build
 v0.0.2
 - add player class
 - small visual tweaks
+- added multiple characters
+- added UI class
 
 v0.0.1
 - groundworks of game (pixi + game class)
