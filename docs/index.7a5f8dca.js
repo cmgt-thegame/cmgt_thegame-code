@@ -532,6 +532,7 @@ parcelHelpers.export(exports, "Game", ()=>Game
 );
 var _pixiJs = require("pixi.js");
 var _player = require("./Player");
+var _robot1 = require("./Robot1");
 var _playerLuukPng = require("../img/player_luuk.png");
 var _playerLuukPngDefault = parcelHelpers.interopDefault(_playerLuukPng);
 var _playerTestPng = require("../img/player_test.png");
@@ -541,13 +542,15 @@ var _robotPngDefault = parcelHelpers.interopDefault(_robotPng);
 var _ui = require("./UI");
 _pixiJs.settings.SCALE_MODE = _pixiJs.SCALE_MODES.NEAREST;
 class Game {
-    robots = [];
+    levelWidth = 1800;
+    levelHeight = 900;
+    robot1s = [];
     constructor(){
         // create a app canvas
         this.app = new _pixiJs.Application({
             backgroundColor: 0x372840,
-            width: 1800,
-            height: 900
+            width: this.levelWidth,
+            height: this.levelHeight
         });
         document.body.appendChild(this.app.view);
         // preload all our textures
@@ -559,13 +562,10 @@ class Game {
     startGame() {
         console.log("starting the game");
         for(let i = 0; i < 10; i++){
-            let robot = new _pixiJs.Sprite(this.loader.resources["robotTexture"].texture);
-            this.app.stage.addChild(robot);
-            robot.x = Math.random() * 1000;
-            robot.y = Math.random() * 500;
-            robot.scale.x = 5;
-            robot.scale.y = 5;
-            this.robots.push(robot);
+            let robot1 = new _robot1.Robot1(this.loader.resources["robotTexture"].texture);
+            this.app.stage.addChild(robot1);
+            robot1.randomLocation();
+            this.robot1s.push(robot1);
         }
         this.player = new _player.Player(this.loader.resources["playerTexture1"].texture, this.loader.resources["playerTexture2"].texture, this.loader.resources["playerTexture3"].texture, 1);
         this.app.stage.addChild(this.player);
@@ -576,11 +576,12 @@ class Game {
     update(delta) {
         this.player.update(delta);
         this.ui.update();
+        for (let robot1 of this.robot1s)robot1.update(delta);
     }
 }
 new Game();
 
-},{"pixi.js":"dsYej","./Player":"jcdvt","../img/robot.png":"et4iS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../img/player_luuk.png":"2Wxrh","../img/player_test.png":"fscwk","./UI":"jZ6xA"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./Player":"jcdvt","../img/robot.png":"et4iS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../img/player_luuk.png":"2Wxrh","../img/player_test.png":"fscwk","./UI":"jZ6xA","./Robot1":"hufPl"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37121,6 +37122,7 @@ class Player extends _pixiJs.Sprite {
         this.scale.y = 0.5;
     }
     update(delta) {
+        if (this.x > 1800) this.x = 0;
         this.x += 0.5 * delta;
     }
 }
@@ -37195,6 +37197,30 @@ class UI {
     update() {
         this.basicText.text = `XP: ${this.xp} Sleepbar: 10/10`;
         this.xp += 1;
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hufPl":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Robot1", ()=>Robot1
+);
+var _pixiJs = require("pixi.js");
+class Robot1 extends _pixiJs.Sprite {
+    constructor(texture){
+        super(texture);
+        this.x = 0;
+        this.y = 0;
+        this.scale.x = 5;
+        this.scale.y = 5;
+    }
+    randomLocation() {
+        this.x = Math.random() * 1000;
+        this.y = Math.random() * 500;
+    }
+    update(delta) {
+        if (this.x < 0) this.x = 1800;
+        this.x -= 0.5 * delta;
     }
 }
 

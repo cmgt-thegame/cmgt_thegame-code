@@ -29,6 +29,9 @@ export class Player extends PIXI.Sprite {
     }
 
     update(delta : number) {
+        if (this.x > 1800) {
+            this.x = 0
+        }
         this.x += 0.5 * delta
     }
 }

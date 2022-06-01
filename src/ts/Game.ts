@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js'
 
 import { Player } from './Player'
+import { Robot1 } from './Robot1'
 
 import playerImage1 from "../img/player_luuk.png"
 import playerImage2 from "../img/player_test.png"
@@ -14,14 +15,17 @@ export class Game {
     public app : PIXI.Application
     loader : PIXI.Loader
     
+    levelWidth : number = 1800;
+    levelHeight : number = 900;
 
-    robots : PIXI.Sprite[] = []
+    robot1s : Robot1[] = []
     player : Player
+    // robot1 : Robot1
     
     ui : UI
     constructor() {
         // create a app canvas
-        this.app = new PIXI.Application({ backgroundColor: 0x372840, width: 1800, height: 900 })
+        this.app = new PIXI.Application({ backgroundColor: 0x372840, width: this.levelWidth, height: this.levelHeight })
         document.body.appendChild(this.app.view)
 
         // preload all our textures
@@ -38,14 +42,12 @@ export class Game {
         console.log("starting the game")
 
         for (let i = 0; i < 10; i++) {
-            let robot = new PIXI.Sprite(this.loader.resources["robotTexture"].texture!)
-            this.app.stage.addChild(robot)
-            robot.x = Math.random()*1000
-            robot.y = Math.random()*500
-            robot.scale.x = 5
-            robot.scale.y = 5
-            this.robots.push(robot)
+            let robot1 = new Robot1(this.loader.resources["robotTexture"].texture!)
+            this.app.stage.addChild(robot1)
+            robot1.randomLocation()
+            this.robot1s.push(robot1)
         }
+
 
         this.player = new Player(this.loader.resources["playerTexture1"].texture!, 
         this.loader.resources["playerTexture2"].texture!, 
@@ -60,6 +62,10 @@ export class Game {
     private update(delta : number) {
         this.player.update(delta)
         this.ui.update()
+
+        for (let robot1 of this.robot1s) {
+            robot1.update(delta)
+        }
     }
 
 }
