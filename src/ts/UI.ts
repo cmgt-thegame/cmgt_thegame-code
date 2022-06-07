@@ -6,11 +6,11 @@ export class UI {
 
     private game : Game
 
-    xp : number
+    private xp : number
 
-    graphics : PIXI.Graphics
-    textStyle : PIXI.TextStyle
-    basicText : PIXI.Text
+    private graphics : PIXI.Graphics
+    private textStyle : PIXI.TextStyle
+    private basicText : PIXI.Text
 
     constructor(game: Game) {
         this.game = game
@@ -27,14 +27,14 @@ export class UI {
             fontSize: 32,
             fill: '#dfeded'
         })
-        this.basicText = new PIXI.Text(`XP: ${this.xp} Sleepbar: 10/10`, this.textStyle)
+        this.basicText = new PIXI.Text(`XP: ${this.xp} Energy: XX-`, this.textStyle)
         this.basicText.x = 50
         this.basicText.y = 30
         this.game.app.stage.addChild(this.basicText);
     } 
 
     public update() {
-        this.basicText.text = `XP: ${this.xp} Sleepbar: 10/10`
+        this.basicText.text = `XP: ${this.xp} Energy: XX-`
         this.xp += 1
     }
 }

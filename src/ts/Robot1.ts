@@ -12,12 +12,12 @@ export class Robot1 extends PIXI.Sprite {
         this.scale.y = 5
     }
 
-    randomLocation() { 
+    public randomLocation() { 
         this.x = Math.random()*1000
         this.y = Math.random()*500
     }
 
-    update(delta : number) {
+    public update(delta : number) {
         if (this.x < 0) {
             this.x = 1800
         }

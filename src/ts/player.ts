@@ -6,8 +6,6 @@ export class Player extends PIXI.Sprite {
 
     // private game : Game
 
-    public character : number
-
     constructor(texture1 : PIXI.Texture, texture2 : PIXI.Texture, texture3 : PIXI.Texture, character : number) {
         switch (character) {
             case 1:
@@ -28,7 +26,7 @@ export class Player extends PIXI.Sprite {
         this.scale.y = 0.5
     }
 
-    update(delta : number) {
+    public update(delta : number) {
         if (this.x > 1800) {
             this.x = 0
         }

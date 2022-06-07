@@ -581,7 +581,7 @@ class Game {
 }
 new Game();
 
-},{"pixi.js":"dsYej","./Player":"jcdvt","../img/robot.png":"et4iS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../img/player_luuk.png":"2Wxrh","../img/player_test.png":"fscwk","./UI":"jZ6xA","./Robot1":"hufPl"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./Player":"jcdvt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Robot1":"hufPl","./UI":"jZ6xA","../img/player_luuk.png":"2Wxrh","../img/player_test.png":"fscwk","../img/robot.png":"et4iS"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37103,6 +37103,7 @@ parcelHelpers.export(exports, "Player", ()=>Player
 );
 var _pixiJs = require("pixi.js");
 class Player extends _pixiJs.Sprite {
+    // private game : Game
     constructor(texture1, texture2, texture3, character){
         switch(character){
             case 1:
@@ -37127,8 +37128,62 @@ class Player extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"et4iS":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('beD2O') + "robot.95a759fb.png" + "?" + Date.now();
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hufPl":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Robot1", ()=>Robot1
+);
+var _pixiJs = require("pixi.js");
+class Robot1 extends _pixiJs.Sprite {
+    constructor(texture){
+        super(texture);
+        this.x = 0;
+        this.y = 0;
+        this.scale.x = 5;
+        this.scale.y = 5;
+    }
+    randomLocation() {
+        this.x = Math.random() * 1000;
+        this.y = Math.random() * 500;
+    }
+    update(delta) {
+        if (this.x < 0) this.x = 1800;
+        this.x -= 0.5 * delta;
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jZ6xA":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "UI", ()=>UI
+);
+var _pixiJs = require("pixi.js");
+class UI {
+    constructor(game){
+        this.game = game;
+        this.xp = 2;
+        this.graphics = new _pixiJs.Graphics();
+        this.graphics.beginFill(0x524a63);
+        this.graphics.drawRect(40, 20, 500, 60);
+        this.graphics.endFill();
+        this.game.app.stage.addChild(this.graphics);
+        this.textStyle = new _pixiJs.TextStyle({
+            fontSize: 32,
+            fill: '#dfeded'
+        });
+        this.basicText = new _pixiJs.Text(`XP: ${this.xp} Energy: XX-`, this.textStyle);
+        this.basicText.x = 50;
+        this.basicText.y = 30;
+        this.game.app.stage.addChild(this.basicText);
+    }
+    update() {
+        this.basicText.text = `XP: ${this.xp} Energy: XX-`;
+        this.xp += 1;
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2Wxrh":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('beD2O') + "player_luuk.22678a98.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -37164,66 +37219,12 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"2Wxrh":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('beD2O') + "player_luuk.22678a98.png" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"fscwk":[function(require,module,exports) {
+},{}],"fscwk":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('beD2O') + "player_test.f8d0cb02.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"jZ6xA":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "UI", ()=>UI
-);
-var _pixiJs = require("pixi.js");
-class UI {
-    constructor(game){
-        this.game = game;
-        this.xp = 2;
-        this.graphics = new _pixiJs.Graphics();
-        this.graphics.beginFill(0x524a63);
-        this.graphics.drawRect(40, 20, 500, 60);
-        this.graphics.endFill();
-        this.game.app.stage.addChild(this.graphics);
-        this.textStyle = new _pixiJs.TextStyle({
-            fontSize: 32,
-            fill: '#dfeded'
-        });
-        this.basicText = new _pixiJs.Text(`XP: ${this.xp} Sleepbar: 10/10`, this.textStyle);
-        this.basicText.x = 50;
-        this.basicText.y = 30;
-        this.game.app.stage.addChild(this.basicText);
-    }
-    update() {
-        this.basicText.text = `XP: ${this.xp} Sleepbar: 10/10`;
-        this.xp += 1;
-    }
-}
+},{"./helpers/bundle-url":"lgJ39"}],"et4iS":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('beD2O') + "robot.95a759fb.png" + "?" + Date.now();
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hufPl":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Robot1", ()=>Robot1
-);
-var _pixiJs = require("pixi.js");
-class Robot1 extends _pixiJs.Sprite {
-    constructor(texture){
-        super(texture);
-        this.x = 0;
-        this.y = 0;
-        this.scale.x = 5;
-        this.scale.y = 5;
-    }
-    randomLocation() {
-        this.x = Math.random() * 1000;
-        this.y = Math.random() * 500;
-    }
-    update(delta) {
-        if (this.x < 0) this.x = 1800;
-        this.x -= 0.5 * delta;
-    }
-}
-
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["d0iXr","iZsgX"], "iZsgX", "parcelRequire216e")
+},{"./helpers/bundle-url":"lgJ39"}]},["d0iXr","iZsgX"], "iZsgX", "parcelRequire216e")
 
 //# sourceMappingURL=index.7a5f8dca.js.map

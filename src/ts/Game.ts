@@ -13,16 +13,16 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 export class Game {
     public app : PIXI.Application
-    loader : PIXI.Loader
+    private loader : PIXI.Loader
     
-    levelWidth : number = 1800;
-    levelHeight : number = 900;
+    private levelWidth : number = 1800;
+    private levelHeight : number = 900;
 
-    robot1s : Robot1[] = []
-    player : Player
+    private robot1s : Robot1[] = []
+    private player : Player
     // robot1 : Robot1
     
-    ui : UI
+    private ui : UI
     constructor() {
         // create a app canvas
         this.app = new PIXI.Application({ backgroundColor: 0x372840, width: this.levelWidth, height: this.levelHeight })
@@ -38,7 +38,7 @@ export class Game {
         this.loader.load(()=>this.startGame())
     }
 
-    public startGame() {
+    private startGame() {
         console.log("starting the game")
 
         for (let i = 0; i < 10; i++) {
