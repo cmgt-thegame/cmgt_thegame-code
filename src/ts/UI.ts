@@ -4,13 +4,13 @@ import { Game } from './Game'
 
 export class UI {
 
-    private game : Game
+    private game : Game;
 
-    private xp : number
+    private xp : number;
 
-    private graphics : PIXI.Graphics
-    private textStyle : PIXI.TextStyle
-    private basicText : PIXI.Text
+    private graphics : PIXI.Graphics;
+    private textStyle : PIXI.TextStyle;
+    private basicText : PIXI.Text;
 
     constructor(game: Game) {
         this.game = game
