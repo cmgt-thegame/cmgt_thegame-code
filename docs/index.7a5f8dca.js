@@ -542,6 +542,7 @@ var _robotPng = require("../img/robot.png");
 var _robotPngDefault = parcelHelpers.interopDefault(_robotPng);
 var _levelPng = require("../img/level.png");
 var _levelPngDefault = parcelHelpers.interopDefault(_levelPng);
+var _background = require("./Background");
 _pixiJs.settings.SCALE_MODE = _pixiJs.SCALE_MODES.NEAREST;
 class Game {
     levelWidth = 1800;
@@ -563,11 +564,7 @@ class Game {
     }
     startGame() {
         console.log("starting the game");
-        this.background = new _pixiJs.Sprite(this.loader.resources["backgroundTexture"].texture);
-        this.background.scale.x = 0.48;
-        this.background.scale.y = 0.48;
-        this.background.x = -640;
-        this.background.y = 0;
+        this.background = new _background.Background(this.loader.resources["backgroundTexture"].texture);
         this.app.stage.addChild(this.background);
         for(let i = 0; i < 10; i++){
             let robot1 = new _robot1.Robot1(this.loader.resources["robotTexture"].texture);
@@ -589,7 +586,7 @@ class Game {
 }
 new Game();
 
-},{"pixi.js":"dsYej","./Player":"jcdvt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Robot1":"hufPl","./UI":"jZ6xA","../img/player_luuk.png":"2Wxrh","../img/player_test.png":"fscwk","../img/robot.png":"et4iS","../img/level.png":"k8vMw"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./Player":"jcdvt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Robot1":"hufPl","./UI":"jZ6xA","../img/player_luuk.png":"2Wxrh","../img/player_test.png":"fscwk","../img/robot.png":"et4iS","../img/level.png":"k8vMw","./Background":"fFYmR"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37236,6 +37233,22 @@ module.exports = require('./helpers/bundle-url').getBundleURL('beD2O') + "robot.
 },{"./helpers/bundle-url":"lgJ39"}],"k8vMw":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('beD2O') + "level.19c4cfc6.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}]},["d0iXr","iZsgX"], "iZsgX", "parcelRequire216e")
+},{"./helpers/bundle-url":"lgJ39"}],"fFYmR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Background", ()=>Background
+);
+var _pixiJs = require("pixi.js");
+class Background extends _pixiJs.Sprite {
+    constructor(texture){
+        super(texture);
+        this.scale.x = 0.48;
+        this.scale.y = 0.48;
+        this.x = -640;
+        this.y = 0;
+    }
+}
+
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["d0iXr","iZsgX"], "iZsgX", "parcelRequire216e")
 
 //# sourceMappingURL=index.7a5f8dca.js.map

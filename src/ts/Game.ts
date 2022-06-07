@@ -9,6 +9,7 @@ import playerImage2 from "../img/player_test.png"
 import playerImage3 from "../img/player_luuk.png"
 import robotImage from "../img/robot.png"
 import bgImage from "../img/level.png";
+import { Background } from './Background'
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
@@ -23,7 +24,7 @@ export class Game {
     private player : Player;
     // robot1 : Robot1
     
-    background: PIXI.Sprite;
+    private background: Background;
 
     private ui : UI;
     constructor() {
@@ -45,13 +46,7 @@ export class Game {
     private startGame() {
         console.log("starting the game")
 
-        this.background = new PIXI.Sprite(
-            this.loader.resources["backgroundTexture"].texture!
-          );
-        this.background.scale.x = 0.48
-        this.background.scale.y = 0.48
-        this.background.x = -640
-        this.background.y = 0
+        this.background = new Background(this.loader.resources["backgroundTexture"].texture!)
         this.app.stage.addChild(this.background);
 
         for (let i = 0; i < 10; i++) {
