@@ -59,7 +59,7 @@ export class Game {
 
         this.player = new Player(this.loader.resources["playerTexture1"].texture!, 
         this.loader.resources["playerTexture2"].texture!, 
-        this.loader.resources["playerTexture3"].texture!, 1)
+        this.loader.resources["playerTexture3"].texture!, 1, this)
         this.app.stage.addChild(this.player);
 
         this.ui = new UI(this)

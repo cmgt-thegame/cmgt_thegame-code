@@ -6,30 +6,64 @@ export class Player extends PIXI.Sprite {
 
     // private game : Game
 
-    constructor(texture1 : PIXI.Texture, texture2 : PIXI.Texture, texture3 : PIXI.Texture, character : number) {
-        switch (character) {
-            case 1:
-                super(texture1)
-                break;
-            case 2:
-                super(texture2)
-                break;
-            case 3:
-                super(texture3)
-                break;
-        }
+    private xspeed : number = 0.5
+    private yspeed : number
+
+    constructor(texture1 : PIXI.Texture, texture2 : PIXI.Texture, texture3 : PIXI.Texture, character : number, game : Game) {
+        super(texture1)
+        // switch (character) {
+        //     case 1:
+        //         super(texture1)
+        //         break;
+        //     case 2:
+        //         super(texture2)
+        //         break;
+        //     case 3:
+        //         super(texture3)
+        //         break;
+        // }
 
         // this.game = game
-        this.x = 200
-        this.y = 200
+        // this.x = game.app.screen.width/2
+        // this.y = game.app.screen.height/2
+        this.x = 100
+        this.y = 100
         this.scale.x = 0.4
         this.scale.y = 0.4
+
+        window.addEventListener("keydown", (e : KeyboardEvent) => this.onKeyDown(e));
+        window.addEventListener("keyup", (e :  KeyboardEvent) => this.onKeyUp(e));
     }
 
     public update(delta : number) {
         if (this.x > 1800) {
             this.x = 0
         }
-        this.x += 0.5 * delta
+        // if (this.x < 0) {
+        //     this.x = 1800
+        // }
+        this.x += this.xspeed
+        
+    }
+
+    onKeyDown(e: KeyboardEvent): void {
+        switch (e.key.toUpperCase()) {
+            case "A":
+            case "ARROWLEFT":
+                this.xspeed = -7
+                this.scale.set
+                break
+        }
+    }
+
+    onKeyUp(e: KeyboardEvent): void {
+        switch (e.key.toUpperCase()) {
+            case "":
+                break;
+            case "A":
+            case "ARROWLEFT":
+                this.xspeed = 0
+                break
+        }
     }
 }

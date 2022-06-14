@@ -572,7 +572,7 @@ class Game {
             robot1.randomLocation();
             this.robot1s.push(robot1);
         }
-        this.player = new _player.Player(this.loader.resources["playerTexture1"].texture, this.loader.resources["playerTexture2"].texture, this.loader.resources["playerTexture3"].texture, 1);
+        this.player = new _player.Player(this.loader.resources["playerTexture1"].texture, this.loader.resources["playerTexture2"].texture, this.loader.resources["playerTexture3"].texture, 1, this);
         this.app.stage.addChild(this.player);
         this.ui = new _ui.UI(this);
         this.app.ticker.add((delta)=>this.update(delta)
@@ -586,7 +586,7 @@ class Game {
 }
 new Game();
 
-},{"pixi.js":"dsYej","./Player":"jcdvt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./Robot1":"hufPl","./UI":"jZ6xA","../img/player_luuk.png":"2Wxrh","../img/player_test.png":"fscwk","../img/robot.png":"et4iS","../img/level.png":"k8vMw","./Background":"fFYmR"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./Player":"jcdvt","./Robot1":"hufPl","./UI":"jZ6xA","../img/player_luuk.png":"2Wxrh","../img/player_test.png":"fscwk","../img/robot.png":"et4iS","../img/level.png":"k8vMw","./Background":"fFYmR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37109,27 +37109,55 @@ parcelHelpers.export(exports, "Player", ()=>Player
 var _pixiJs = require("pixi.js");
 class Player extends _pixiJs.Sprite {
     // private game : Game
-    constructor(texture1, texture2, texture3, character){
-        switch(character){
-            case 1:
-                super(texture1);
-                break;
-            case 2:
-                super(texture2);
-                break;
-            case 3:
-                super(texture3);
-                break;
-        }
+    xspeed = 2.5;
+    constructor(texture1, texture2, texture3, character, game){
+        super(texture1);
+        // switch (character) {
+        //     case 1:
+        //         super(texture1)
+        //         break;
+        //     case 2:
+        //         super(texture2)
+        //         break;
+        //     case 3:
+        //         super(texture3)
+        //         break;
+        // }
         // this.game = game
-        this.x = 200;
-        this.y = 200;
+        // this.x = game.app.screen.width/2
+        // this.y = game.app.screen.height/2
+        this.x = 100;
+        this.y = 100;
         this.scale.x = 0.4;
         this.scale.y = 0.4;
+        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
+        );
+        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
+        );
     }
     update(delta) {
         if (this.x > 1800) this.x = 0;
-        this.x += 0.5 * delta;
+        if (this.x < 0) this.x = 1800;
+        this.x += this.xspeed;
+    }
+    onKeyDown(e) {
+        switch(e.key.toUpperCase()){
+            case "A":
+            case "ARROWLEFT":
+                this.xspeed = -7;
+                this.scale.set;
+                break;
+        }
+    }
+    onKeyUp(e) {
+        switch(e.key.toUpperCase()){
+            case "":
+                break;
+            case "A":
+            case "ARROWLEFT":
+                this.xspeed = 0;
+                break;
+        }
     }
 }
 
