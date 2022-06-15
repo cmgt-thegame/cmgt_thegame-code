@@ -8,8 +8,8 @@ export class Player extends PIXI.Sprite {
 
     // private game : Game
 
-    private xspeed : number = -5
-    // private yspeed : number
+    private xspeed : number = -1
+    private yspeed : number
 
     constructor(texture1 : PIXI.Texture, texture2 : PIXI.Texture, texture3 : PIXI.Texture, character : number) {
         super(texture1);

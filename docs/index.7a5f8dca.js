@@ -37112,8 +37112,7 @@ parcelHelpers.export(exports, "Player", ()=>Player
 var _pixiJs = require("pixi.js");
 class Player extends _pixiJs.Sprite {
     // private game : Game
-    xspeed = -5;
-    // private yspeed : number
+    xspeed = -1;
     constructor(texture1, texture2, texture3, character){
         super(texture1);
         // switch (character) {
