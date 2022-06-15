@@ -566,16 +566,13 @@ class Game {
         console.log("starting the game");
         this.background = new _background.Background(this.loader.resources["backgroundTexture"].texture);
         this.app.stage.addChild(this.background);
-        for(let i = 0; i < 10; i++){
+        for(let i = 0; i < 50; i++){
             let robot1 = new _robot1.Robot1(this.loader.resources["robotTexture"].texture);
             this.app.stage.addChild(robot1);
             robot1.randomLocation();
             this.robot1s.push(robot1);
         }
-        // this.player = new Player(this.loader.resources["playerTexture1"].texture!, 
-        // this.loader.resources["playerTexture2"].texture!, 
-        // this.loader.resources["playerTexture3"].texture!, 1, this)
-        this.player = new _player.Player(this.loader.resources["playerTexture1"].texture, this.loader.resources["playerTexture2"].texture, this.loader.resources["playerTexture3"].texture, 1);
+        this.player = new _player.Player(this.loader.resources["playerTexture1"].texture, this.loader.resources["playerTexture2"].texture, this.loader.resources["playerTexture3"].texture, 1, this);
         this.app.stage.addChild(this.player);
         this.ui = new _ui.UI(this);
         this.app.ticker.add((delta)=>this.update(delta)
@@ -37111,40 +37108,79 @@ parcelHelpers.export(exports, "Player", ()=>Player
 );
 var _pixiJs = require("pixi.js");
 class Player extends _pixiJs.Sprite {
-    // private game : Game
-    xspeed = -1;
-    constructor(texture1, texture2, texture3, character){
-        super(texture1);
-        // switch (character) {
-        //     case 1:
-        //         super(texture1)
-        //         break;
-        //     case 2:
-        //         super(texture2)
-        //         break;
-        //     case 3:
-        //         super(texture3)
-        //         break;
-        // }
-        console.log("test 3");
+    speedMult = 2.5;
+    xspeed = 0;
+    yspeed = 0;
+    constructor(texture1, texture2, texture3, character, game){
+        // super(texture1);
+        switch(character){
+            case 1:
+                super(texture1);
+                break;
+            case 2:
+                super(texture2);
+                break;
+            case 3:
+                super(texture3);
+                break;
+        }
         // this.game = game
-        // this.x = game.app.screen.width/2
-        // this.y = game.app.screen.height/2
-        this.x = 100;
-        this.y = 100;
+        this.x = game.app.screen.width / 2;
+        this.y = game.app.screen.height / 2 - 200;
+        // this.x = 100
+        // this.y = 100
         this.scale.x = 0.4;
         this.scale.y = 0.4;
-    // window.addEventListener("keydown", (e : KeyboardEvent) => this.onKeyDown(e));
-    // window.addEventListener("keyup", (e :  KeyboardEvent) => this.onKeyUp(e));
+        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
+        );
+        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
+        );
     }
     update() {
-        // if (this.x > 1800) {
-        //     this.x = 0
-        // }
-        // if (this.x < 0) {
-        //     this.x = 1800
-        // }
+        if (this.x > 1800) this.x = 0;
+        if (this.x < 0) this.x = 1800;
         this.x += this.xspeed;
+        this.y += this.yspeed;
+    }
+    onKeyDown(e) {
+        switch(e.key.toUpperCase()){
+            case "A":
+            case "ARROWLEFT":
+                this.xspeed = -1 * this.speedMult;
+                this.scale.set;
+                break;
+            case "D":
+            case "ARROWRIGHT":
+                this.xspeed = 1 * this.speedMult;
+                this.scale.set;
+                break;
+            case "W":
+            case "ARROWUP":
+                this.yspeed = -1 * this.speedMult;
+                break;
+            case "S":
+            case "ARROWDOWN":
+                this.yspeed = 1 * this.speedMult;
+                break;
+        }
+    }
+    onKeyUp(e) {
+        switch(e.key.toUpperCase()){
+            case "":
+                break;
+            case "A":
+            case "D":
+            case "ARROWLEFT":
+            case "ARROWRIGHT":
+                this.xspeed = 0;
+                break;
+            case "W":
+            case "S":
+            case "ARROWUP":
+            case "ARROWDOWN":
+                this.yspeed = 0;
+                break;
+        }
     }
 }
 

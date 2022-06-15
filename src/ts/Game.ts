@@ -49,7 +49,7 @@ export class Game {
         this.background = new Background(this.loader.resources["backgroundTexture"].texture!)
         this.app.stage.addChild(this.background);
 
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 50; i++) {
             let robot1 = new Robot1(this.loader.resources["robotTexture"].texture!)
             this.app.stage.addChild(robot1)
             robot1.randomLocation()
@@ -57,12 +57,9 @@ export class Game {
         }
 
 
-        // this.player = new Player(this.loader.resources["playerTexture1"].texture!, 
-        // this.loader.resources["playerTexture2"].texture!, 
-        // this.loader.resources["playerTexture3"].texture!, 1, this)
         this.player = new Player(this.loader.resources["playerTexture1"].texture!, 
         this.loader.resources["playerTexture2"].texture!, 
-        this.loader.resources["playerTexture3"].texture!, 1)
+        this.loader.resources["playerTexture3"].texture!, 1, this)
         this.app.stage.addChild(this.player);
 
         this.ui = new UI(this)
