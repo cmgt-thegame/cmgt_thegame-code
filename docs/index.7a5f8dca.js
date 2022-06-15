@@ -545,15 +545,17 @@ var _levelPngDefault = parcelHelpers.interopDefault(_levelPng);
 var _background = require("./Background");
 _pixiJs.settings.SCALE_MODE = _pixiJs.SCALE_MODES.NEAREST;
 class Game {
-    levelWidth = 1800;
+    levelWidth = 1900;
     levelHeight = 900;
+    frameWidth = 1500;
+    framelHeight = 900;
     robot1s = [];
     constructor(){
         // create a app canvas
         this.app = new _pixiJs.Application({
             backgroundColor: 0x372840,
-            width: this.levelWidth,
-            height: this.levelHeight
+            width: this.frameWidth,
+            height: this.framelHeight
         });
         document.body.appendChild(this.app.view);
         // preload all our textures
@@ -572,7 +574,7 @@ class Game {
             robot1.randomLocation();
             this.robot1s.push(robot1);
         }
-        this.player = new _player.Player(this.loader.resources["playerTexture1"].texture, this.loader.resources["playerTexture2"].texture, this.loader.resources["playerTexture3"].texture, 1, this);
+        this.player = new _player.Player(this.loader.resources["playerTexture1"].texture, this.loader.resources["playerTexture2"].texture, this.loader.resources["playerTexture3"].texture, 1, this, this.levelWidth, this.levelHeight);
         this.app.stage.addChild(this.player);
         this.ui = new _ui.UI(this);
         this.app.ticker.add((delta)=>this.update(delta)
@@ -37111,24 +37113,29 @@ class Player extends _pixiJs.Sprite {
     speedMult = 2.5;
     xspeed = 0;
     yspeed = 0;
-    constructor(texture1, texture2, texture3, character, game){
-        // super(texture1);
-        switch(character){
-            case 1:
-                super(texture1);
-                break;
-            case 2:
-                super(texture2);
-                break;
-            case 3:
-                super(texture3);
-                break;
-        }
-        // this.game = game
-        this.x = game.app.screen.width / 2;
-        this.y = game.app.screen.height / 2 - 200;
-        // this.x = 100
-        // this.y = 100
+    constructor(texture1, texture2, texture3, character, game, levelWidth, levelHeight){
+        super(texture1);
+        // switch (character) {
+        //     case 1:
+        //         super(texture1)
+        //         break;
+        //     case 2:
+        //         super(texture2)
+        //         break;
+        //     case 3:
+        //         super(texture3)
+        //         break;
+        // }
+        this.game = game;
+        this.levelWidth = levelWidth;
+        this.levelHeight = levelHeight;
+        this.centerx = game.app.screen.width / 2;
+        this.centery = game.app.screen.height / 2;
+        // this.centerx = 400
+        // this.centery = 400
+        this.anchor.set(0.5);
+        this.x = this.centerx;
+        this.y = this.centery;
         this.scale.x = 0.4;
         this.scale.y = 0.4;
         window.addEventListener("keydown", (e)=>this.onKeyDown(e)
@@ -37137,22 +37144,27 @@ class Player extends _pixiJs.Sprite {
         );
     }
     update() {
-        if (this.x > 1800) this.x = 0;
-        if (this.x < 0) this.x = 1800;
-        this.x += this.xspeed;
-        this.y += this.yspeed;
+        this.x = this.clamp(this.x + this.xspeed, 0, this.levelWidth);
+        this.y = this.clamp(this.y + this.yspeed, 0, this.levelHeight);
+    // let mapx = this.clamp(this.x, this.centerx, this.levelWidth - this.centerx)
+    // let mapy = this.clamp(this.y, this.centery, this.levelHeight - this.centery)
+    // let mapx = this.clamp(this.x, this.centerx, this.levelWidth - 400)
+    // let mapy = this.clamp(this.y, this.centery, this.levelHeight - 400)
+    // this.game.app.stage.pivot.set(mapx, mapy)     
+    // console.log(this.x, this.y);
+    }
+    clamp(num, min, max) {
+        return Math.min(Math.max(num, min), max);
     }
     onKeyDown(e) {
         switch(e.key.toUpperCase()){
             case "A":
             case "ARROWLEFT":
                 this.xspeed = -1 * this.speedMult;
-                this.scale.set;
                 break;
             case "D":
             case "ARROWRIGHT":
                 this.xspeed = 1 * this.speedMult;
-                this.scale.set;
                 break;
             case "W":
             case "ARROWUP":

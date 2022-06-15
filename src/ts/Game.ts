@@ -17,8 +17,11 @@ export class Game {
     public app : PIXI.Application;
     private loader : PIXI.Loader;
     
-    private levelWidth : number = 1800;
+    private levelWidth : number = 1900;
     private levelHeight : number = 900;
+
+    public frameWidth : number = 1500;
+    public framelHeight : number = 900;
 
     private robot1s : Robot1[] = [];
     private player : Player;
@@ -29,7 +32,7 @@ export class Game {
     private ui : UI;
     constructor() {
         // create a app canvas
-        this.app = new PIXI.Application({ backgroundColor: 0x372840, width: this.levelWidth, height: this.levelHeight })
+        this.app = new PIXI.Application({ backgroundColor: 0x372840, width: this.frameWidth, height: this.framelHeight })
         document.body.appendChild(this.app.view)
 
         // preload all our textures
@@ -59,7 +62,8 @@ export class Game {
 
         this.player = new Player(this.loader.resources["playerTexture1"].texture!, 
         this.loader.resources["playerTexture2"].texture!, 
-        this.loader.resources["playerTexture3"].texture!, 1, this)
+        this.loader.resources["playerTexture3"].texture!, 
+        1, this, this.levelWidth, this.levelHeight)
         this.app.stage.addChild(this.player);
 
         this.ui = new UI(this)
