@@ -57,9 +57,12 @@ export class Game {
         }
 
 
+        // this.player = new Player(this.loader.resources["playerTexture1"].texture!, 
+        // this.loader.resources["playerTexture2"].texture!, 
+        // this.loader.resources["playerTexture3"].texture!, 1, this)
         this.player = new Player(this.loader.resources["playerTexture1"].texture!, 
         this.loader.resources["playerTexture2"].texture!, 
-        this.loader.resources["playerTexture3"].texture!, 1, this)
+        this.loader.resources["playerTexture3"].texture!, 1)
         this.app.stage.addChild(this.player);
 
         this.ui = new UI(this)
@@ -68,7 +71,7 @@ export class Game {
     }
 
     private update(delta : number) {
-        this.player.update(delta)
+        this.player.update()
         this.ui.update()
 
         for (let robot1 of this.robot1s) {

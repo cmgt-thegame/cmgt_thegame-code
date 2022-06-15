@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
-        "strict": true,
-        "noImplicitAny": true,
-        "noImplicitThis": true,
+        "strict": false,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
         "strictPropertyInitialization": false,
         "module": "ES6",
         "sourceMap": true,

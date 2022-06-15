@@ -572,14 +572,17 @@ class Game {
             robot1.randomLocation();
             this.robot1s.push(robot1);
         }
-        this.player = new _player.Player(this.loader.resources["playerTexture1"].texture, this.loader.resources["playerTexture2"].texture, this.loader.resources["playerTexture3"].texture, 1, this);
+        // this.player = new Player(this.loader.resources["playerTexture1"].texture!, 
+        // this.loader.resources["playerTexture2"].texture!, 
+        // this.loader.resources["playerTexture3"].texture!, 1, this)
+        this.player = new _player.Player(this.loader.resources["playerTexture1"].texture, this.loader.resources["playerTexture2"].texture, this.loader.resources["playerTexture3"].texture, 1);
         this.app.stage.addChild(this.player);
         this.ui = new _ui.UI(this);
         this.app.ticker.add((delta)=>this.update(delta)
         );
     }
     update(delta) {
-        this.player.update(delta);
+        this.player.update();
         this.ui.update();
         for (let robot1 of this.robot1s)robot1.update(delta);
     }
@@ -37109,8 +37112,9 @@ parcelHelpers.export(exports, "Player", ()=>Player
 var _pixiJs = require("pixi.js");
 class Player extends _pixiJs.Sprite {
     // private game : Game
-    xspeed = 2.5;
-    constructor(texture1, texture2, texture3, character, game){
+    xspeed = -5;
+    // private yspeed : number
+    constructor(texture1, texture2, texture3, character){
         super(texture1);
         // switch (character) {
         //     case 1:
@@ -37123,6 +37127,7 @@ class Player extends _pixiJs.Sprite {
         //         super(texture3)
         //         break;
         // }
+        console.log("test 3");
         // this.game = game
         // this.x = game.app.screen.width/2
         // this.y = game.app.screen.height/2
@@ -37130,34 +37135,17 @@ class Player extends _pixiJs.Sprite {
         this.y = 100;
         this.scale.x = 0.4;
         this.scale.y = 0.4;
-        window.addEventListener("keydown", (e)=>this.onKeyDown(e)
-        );
-        window.addEventListener("keyup", (e)=>this.onKeyUp(e)
-        );
+    // window.addEventListener("keydown", (e : KeyboardEvent) => this.onKeyDown(e));
+    // window.addEventListener("keyup", (e :  KeyboardEvent) => this.onKeyUp(e));
     }
-    update(delta) {
-        if (this.x > 1800) this.x = 0;
-        if (this.x < 0) this.x = 1800;
+    update() {
+        // if (this.x > 1800) {
+        //     this.x = 0
+        // }
+        // if (this.x < 0) {
+        //     this.x = 1800
+        // }
         this.x += this.xspeed;
-    }
-    onKeyDown(e) {
-        switch(e.key.toUpperCase()){
-            case "A":
-            case "ARROWLEFT":
-                this.xspeed = -7;
-                this.scale.set;
-                break;
-        }
-    }
-    onKeyUp(e) {
-        switch(e.key.toUpperCase()){
-            case "":
-                break;
-            case "A":
-            case "ARROWLEFT":
-                this.xspeed = 0;
-                break;
-        }
     }
 }
 

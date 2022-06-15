@@ -2,15 +2,17 @@ import * as PIXI from 'pixi.js'
 
 import { Game } from "./Game"
 
+
+
 export class Player extends PIXI.Sprite {
 
     // private game : Game
 
-    private xspeed : number = 0.5
-    private yspeed : number
+    private xspeed : number = -5
+    // private yspeed : number
 
-    constructor(texture1 : PIXI.Texture, texture2 : PIXI.Texture, texture3 : PIXI.Texture, character : number, game : Game) {
-        super(texture1)
+    constructor(texture1 : PIXI.Texture, texture2 : PIXI.Texture, texture3 : PIXI.Texture, character : number) {
+        super(texture1);
         // switch (character) {
         //     case 1:
         //         super(texture1)
@@ -23,6 +25,9 @@ export class Player extends PIXI.Sprite {
         //         break;
         // }
 
+        console.log("test 3");
+
+
         // this.game = game
         // this.x = game.app.screen.width/2
         // this.y = game.app.screen.height/2
@@ -31,14 +36,14 @@ export class Player extends PIXI.Sprite {
         this.scale.x = 0.4
         this.scale.y = 0.4
 
-        window.addEventListener("keydown", (e : KeyboardEvent) => this.onKeyDown(e));
-        window.addEventListener("keyup", (e :  KeyboardEvent) => this.onKeyUp(e));
+        // window.addEventListener("keydown", (e : KeyboardEvent) => this.onKeyDown(e));
+        // window.addEventListener("keyup", (e :  KeyboardEvent) => this.onKeyUp(e));
     }
 
-    public update(delta : number) {
-        if (this.x > 1800) {
-            this.x = 0
-        }
+    public update() {
+        // if (this.x > 1800) {
+        //     this.x = 0
+        // }
         // if (this.x < 0) {
         //     this.x = 1800
         // }
@@ -46,24 +51,24 @@ export class Player extends PIXI.Sprite {
         
     }
 
-    onKeyDown(e: KeyboardEvent): void {
-        switch (e.key.toUpperCase()) {
-            case "A":
-            case "ARROWLEFT":
-                this.xspeed = -7
-                this.scale.set
-                break
-        }
-    }
+    // onKeyDown(e: KeyboardEvent): void {
+    //     switch (e.key.toUpperCase()) {
+    //         case "A":
+    //         case "ARROWLEFT":
+    //             this.xspeed = -7
+    //             this.scale.set
+    //             break
+    //     }
+    // }
 
-    onKeyUp(e: KeyboardEvent): void {
-        switch (e.key.toUpperCase()) {
-            case "":
-                break;
-            case "A":
-            case "ARROWLEFT":
-                this.xspeed = 0
-                break
-        }
-    }
+    // onKeyUp(e: KeyboardEvent): void {
+    //     switch (e.key.toUpperCase()) {
+    //         case "":
+    //             break;
+    //         case "A":
+    //         case "ARROWLEFT":
+    //             this.xspeed = 0
+    //             break
+    //     }
+    // }
 }
