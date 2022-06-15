@@ -568,7 +568,7 @@ class Game {
         console.log("starting the game");
         this.background = new _background.Background(this.loader.resources["backgroundTexture"].texture);
         this.app.stage.addChild(this.background);
-        for(let i = 0; i < 50; i++){
+        for(let i = 0; i < 15; i++){
             let robot1 = new _robot1.Robot1(this.loader.resources["robotTexture"].texture);
             this.app.stage.addChild(robot1);
             robot1.randomLocation();

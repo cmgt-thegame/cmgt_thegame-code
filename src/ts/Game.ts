@@ -52,7 +52,7 @@ export class Game {
         this.background = new Background(this.loader.resources["backgroundTexture"].texture!)
         this.app.stage.addChild(this.background);
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 15; i++) {
             let robot1 = new Robot1(this.loader.resources["robotTexture"].texture!)
             this.app.stage.addChild(robot1)
             robot1.randomLocation()
