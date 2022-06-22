@@ -60,8 +60,8 @@ export class Player extends PIXI.Sprite {
         }
 
 
-        this.x = this.clamp(this.x + this.xspeed, 0 + 100, this.game.levelWidth - 150)
-        this.y = this.clamp(this.y + this.yspeed, 0 + 150, this.game.levelHeight - 300)
+        this.x = this.clamp(this.x + this.xspeed*this.speedMult, 0 + 100, this.game.levelWidth - 150)
+        this.y = this.clamp(this.y + this.yspeed*this.speedMult, 0 + 150, this.game.levelHeight - 300)
 
         // let mapx = this.clamp(this.x, this.centerx, this.levelWidth - this.centerx)
         // let mapy = this.clamp(this.y, this.centery, this.levelHeight - this.centery)
@@ -80,25 +80,26 @@ export class Player extends PIXI.Sprite {
         switch (e.key.toUpperCase()) {
             case "A":
             case "ARROWLEFT":
-                this.xspeed = -1*this.speedMult
+                this.xspeed = -1
                 this.scale.set(-4, 4)
                 break;
             case "D":
             case "ARROWRIGHT":
-                this.xspeed = 1*this.speedMult
+                this.xspeed = 1
                 this.scale.set(4, 4)
                 break;
             case "W":
             case "ARROWUP":
-                this.yspeed = -1*this.speedMult
+                this.yspeed = -1
                 break;
             case "S":
             case "ARROWDOWN":
-                this.yspeed = 1*this.speedMult
+                this.yspeed = 1
                 break;
             case " ":
             case "J":
                 this.isAttacking = true
+                this.speedMult = 1.5
 
                 const myfilter = new PIXI.filters.ColorMatrixFilter()
                 this.filters = [myfilter]
@@ -127,6 +128,7 @@ export class Player extends PIXI.Sprite {
             case " ":
             case "J":
                 this.isAttacking = false
+                this.speedMult = 2.5
 
                 const myfilter = new PIXI.filters.ColorMatrixFilter()
                 this.filters = [myfilter]
