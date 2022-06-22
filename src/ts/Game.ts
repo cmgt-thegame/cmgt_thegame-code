@@ -4,10 +4,10 @@ import { Player } from './Player'
 import { Robot1 } from './Robot1'
 import { UI } from './UI'
 
-import playerImage1 from "../img/player_luuk.png"
+import playerImage1 from "../img/player_luuk_sword.png"
 import playerImage2 from "../img/player_test.png"
 import playerImage3 from "../img/player_luuk.png"
-import robotImage from "../img/robot.png"
+import robotImage from "../img/robot1.png"
 import bgImage from "../img/level.png";
 import { Background } from './Background'
 
@@ -79,7 +79,13 @@ export class Game {
             robot1.update(delta)
 
             if (this.collision(robot1, this.player)) {
-                robot1.randomLocation();
+                if(this.player.isAttacking) {
+                    this.robot1s = this.robot1s.filter(r => r != robot1)
+                    robot1.destroy();
+                } else {
+                    robot1.randomLocation();
+                }
+                
             }
         }
     }

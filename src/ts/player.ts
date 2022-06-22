@@ -18,6 +18,8 @@ export class Player extends PIXI.Sprite {
     private centerx : number;
     private centery : number;
 
+    public isAttacking : boolean = false;
+
     constructor(texture1 : PIXI.Texture, texture2 : PIXI.Texture, texture3 : PIXI.Texture, character : number, game : Game, levelWidth : number, levelHeight : number) {
         super(texture1);
         // switch (character) {
@@ -45,8 +47,7 @@ export class Player extends PIXI.Sprite {
         this.x = this.centerx 
         this.y = this.centery
 
-        this.scale.x = 0.4
-        this.scale.y = 0.4
+        this.scale.set(4, 4)
 
         window.addEventListener("keydown", (e : KeyboardEvent) => this.onKeyDown(e));
         window.addEventListener("keyup", (e :  KeyboardEvent) => this.onKeyUp(e));
@@ -76,10 +77,12 @@ export class Player extends PIXI.Sprite {
             case "A":
             case "ARROWLEFT":
                 this.xspeed = -1*this.speedMult
+                this.scale.set(-4, 4)
                 break;
             case "D":
             case "ARROWRIGHT":
                 this.xspeed = 1*this.speedMult
+                this.scale.set(4, 4)
                 break;
             case "W":
             case "ARROWUP":
@@ -88,6 +91,10 @@ export class Player extends PIXI.Sprite {
             case "S":
             case "ARROWDOWN":
                 this.yspeed = 1*this.speedMult
+                break;
+            case " ":
+            case "J":
+                this.isAttacking = true
                 break;
         }
     }
@@ -107,6 +114,10 @@ export class Player extends PIXI.Sprite {
             case "ARROWUP":
             case "ARROWDOWN":
                 this.yspeed = 0
+                break;
+            case " E":
+            case "J":
+                this.isAttacking = false
                 break;
         }
     }
