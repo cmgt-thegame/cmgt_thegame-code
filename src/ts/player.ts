@@ -44,7 +44,7 @@ export class Player extends PIXI.Sprite {
 
         this.anchor.set(0.5)
 
-        this.x = this.centerx 
+        this.x = this.centerx -500
         this.y = this.centery
 
         this.scale.set(4, 4)
@@ -55,9 +55,13 @@ export class Player extends PIXI.Sprite {
 
     public update() {
 
+        if (this.isAttacking) {
 
-        this.x = this.clamp(this.x + this.xspeed, 0, this.levelWidth)
-        this.y = this.clamp(this.y + this.yspeed, 0, this.levelHeight)
+        }
+
+
+        this.x = this.clamp(this.x + this.xspeed, 0 + 100, this.game.levelWidth - 150)
+        this.y = this.clamp(this.y + this.yspeed, 0 + 150, this.game.levelHeight - 300)
 
         // let mapx = this.clamp(this.x, this.centerx, this.levelWidth - this.centerx)
         // let mapy = this.clamp(this.y, this.centery, this.levelHeight - this.centery)
@@ -95,6 +99,11 @@ export class Player extends PIXI.Sprite {
             case " ":
             case "J":
                 this.isAttacking = true
+
+                const myfilter = new PIXI.filters.ColorMatrixFilter()
+                this.filters = [myfilter]
+                myfilter.predator(0.2, false)
+                // myfilter.hue(320, false) // HUE filter
                 break;
         }
     }
@@ -115,9 +124,13 @@ export class Player extends PIXI.Sprite {
             case "ARROWDOWN":
                 this.yspeed = 0
                 break;
-            case " E":
+            case " ":
             case "J":
                 this.isAttacking = false
+
+                const myfilter = new PIXI.filters.ColorMatrixFilter()
+                this.filters = [myfilter]
+                // myfilter.alpha(0)
                 break;
         }
     }

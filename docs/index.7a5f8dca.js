@@ -549,7 +549,7 @@ _pixiJs.settings.SCALE_MODE = _pixiJs.SCALE_MODES.NEAREST;
 class Game {
     levelWidth = 1900;
     levelHeight = 900;
-    frameWidth = 1500;
+    frameWidth = 1900;
     framelHeight = 900;
     robot1s = [];
     constructor(){
@@ -571,7 +571,7 @@ class Game {
         this.background = new _background.Background(this.loader.resources["backgroundTexture"].texture);
         this.app.stage.addChild(this.background);
         for(let i = 0; i < 15; i++){
-            let robot1 = new _robot1.Robot1(this.loader.resources["robotTexture"].texture);
+            let robot1 = new _robot1.Robot1(this.loader.resources["robotTexture"].texture, this);
             this.app.stage.addChild(robot1);
             robot1.randomLocation();
             this.robot1s.push(robot1);
@@ -37151,7 +37151,7 @@ class Player extends _pixiJs.Sprite {
         // this.centerx = 400
         // this.centery = 400
         this.anchor.set(0.5);
-        this.x = this.centerx;
+        this.x = this.centerx - 500;
         this.y = this.centery;
         this.scale.set(4, 4);
         window.addEventListener("keydown", (e)=>this.onKeyDown(e)
@@ -37160,8 +37160,9 @@ class Player extends _pixiJs.Sprite {
         );
     }
     update() {
-        this.x = this.clamp(this.x + this.xspeed, 0, this.levelWidth);
-        this.y = this.clamp(this.y + this.yspeed, 0, this.levelHeight);
+        this.isAttacking;
+        this.x = this.clamp(this.x + this.xspeed, 100, this.game.levelWidth - 150);
+        this.y = this.clamp(this.y + this.yspeed, 150, this.game.levelHeight - 300);
     // let mapx = this.clamp(this.x, this.centerx, this.levelWidth - this.centerx)
     // let mapy = this.clamp(this.y, this.centery, this.levelHeight - this.centery)
     // let mapx = this.clamp(this.x, this.centerx, this.levelWidth - 400)
@@ -37195,6 +37196,11 @@ class Player extends _pixiJs.Sprite {
             case " ":
             case "J":
                 this.isAttacking = true;
+                const myfilter = new _pixiJs.filters.ColorMatrixFilter();
+                this.filters = [
+                    myfilter
+                ];
+                myfilter.predator(0.2, false);
                 break;
         }
     }
@@ -37214,9 +37220,13 @@ class Player extends _pixiJs.Sprite {
             case "ARROWDOWN":
                 this.yspeed = 0;
                 break;
-            case " E":
+            case " ":
             case "J":
                 this.isAttacking = false;
+                const myfilter = new _pixiJs.filters.ColorMatrixFilter();
+                this.filters = [
+                    myfilter
+                ];
                 break;
         }
     }
@@ -37229,20 +37239,49 @@ parcelHelpers.export(exports, "Robot1", ()=>Robot1
 );
 var _pixiJs = require("pixi.js");
 class Robot1 extends _pixiJs.Sprite {
-    constructor(texture){
+    timerLeft = 0;
+    timerRight = 0;
+    xspeed = 0.5;
+    yspeed = 0;
+    constructor(texture, game){
         super(texture);
+        this.game = game;
         this.x = 0;
         this.y = 0;
-        this.scale.x = 4;
-        this.scale.y = 4;
+        this.scale.set(-4, 4);
+        this.lowerTimer = this.randomInt(20, 50) * 30;
+        this.upperTimer = this.randomInt(10, 25) * 30;
+        console.log(this.lowerTimer, this.upperTimer);
     }
     randomLocation() {
-        this.x = Math.random() * 1000;
-        this.y = Math.random() * 500;
+        this.x = this.randomInt(800, this.game.levelWidth - this.getBounds().x - 100);
+        this.y = this.randomInt(150, this.game.levelHeight - this.getBounds().y - 300);
     }
     update(delta) {
-        if (this.x < 0) this.x = 1800;
-        this.x -= 0.5 * delta;
+        this.x = this.clamp(this.x + this.xspeed, 100, this.game.levelWidth - 150);
+        this.y = this.clamp(this.y + this.yspeed, 150, this.game.levelHeight - 300);
+        this.timerLeft++;
+        this.timerRight++;
+        // console.log(this.timerLeft, this.upperTimer)
+        if (this.timerLeft > this.lowerTimer) {
+            console.log("TIMER");
+            this.xspeed = 0.5;
+            this.timerLeft = 0;
+            this.x = -this.getBounds().x;
+            this.scale.set(-4, 4);
+        }
+        if (this.timerRight > this.upperTimer) {
+            this.xspeed = -0.5;
+            this.timerRight = 0;
+            this.x = +this.getBounds().x;
+            this.scale.set(4, 4);
+        }
+    }
+    randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    clamp(num, min, max) {
+        return Math.min(Math.max(num, min), max);
     }
 }
 
@@ -37272,7 +37311,7 @@ class UI {
     }
     update() {
         this.basicText.text = `XP: ${this.xp} Energy: XX-`;
-        this.xp += 1;
+    // this.xp += 1
     }
 }
 

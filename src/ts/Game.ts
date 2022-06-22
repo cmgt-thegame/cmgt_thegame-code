@@ -17,10 +17,10 @@ export class Game {
     public app : PIXI.Application;
     private loader : PIXI.Loader;
     
-    private levelWidth : number = 1900;
-    private levelHeight : number = 900;
+    public levelWidth : number = 1900;
+    public levelHeight : number = 900;
 
-    public frameWidth : number = 1500;
+    public frameWidth : number = 1900;
     public framelHeight : number = 900;
 
     private robot1s : Robot1[] = [];
@@ -53,7 +53,7 @@ export class Game {
         this.app.stage.addChild(this.background);
 
         for (let i = 0; i < 15; i++) {
-            let robot1 = new Robot1(this.loader.resources["robotTexture"].texture!)
+            let robot1 = new Robot1(this.loader.resources["robotTexture"].texture!, this)
             this.app.stage.addChild(robot1)
             robot1.randomLocation()
             this.robot1s.push(robot1)

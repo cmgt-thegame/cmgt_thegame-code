@@ -35,6 +35,6 @@ export class UI {
 
     public update() {
         this.basicText.text = `XP: ${this.xp} Energy: XX-`
-        this.xp += 1
+        // this.xp += 1
     }
 }
