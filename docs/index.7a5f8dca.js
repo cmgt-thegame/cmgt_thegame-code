@@ -545,6 +545,14 @@ var _robot1PngDefault = parcelHelpers.interopDefault(_robot1Png);
 var _levelPng = require("../img/level.png");
 var _levelPngDefault = parcelHelpers.interopDefault(_levelPng);
 var _background = require("./Background");
+var _impact1Wav = require("url:../audio/impact1.wav");
+var _impact1WavDefault = parcelHelpers.interopDefault(_impact1Wav);
+var _hitHurt2Wav = require("url:../audio/Hit_Hurt2.wav");
+var _hitHurt2WavDefault = parcelHelpers.interopDefault(_hitHurt2Wav);
+var _shoot5Wav = require("url:../audio/Shoot5.wav");
+var _shoot5WavDefault = parcelHelpers.interopDefault(_shoot5Wav);
+var _explode2Wav = require("url:../audio/Explode2.wav");
+var _explode2WavDefault = parcelHelpers.interopDefault(_explode2Wav);
 _pixiJs.settings.SCALE_MODE = _pixiJs.SCALE_MODES.NEAREST;
 class Game {
     levelWidth = 1900;
@@ -562,7 +570,7 @@ class Game {
         document.body.appendChild(this.app.view);
         // preload all our textures
         this.loader = new _pixiJs.Loader();
-        this.loader.add('playerTexture1', _playerLuukSwordPngDefault.default).add('playerTexture2', _playerTestPngDefault.default).add('playerTexture3', _playerLuukPngDefault.default).add('robotTexture', _robot1PngDefault.default).add("backgroundTexture", _levelPngDefault.default);
+        this.loader.add('playerTexture1', _playerLuukSwordPngDefault.default).add('playerTexture2', _playerTestPngDefault.default).add('playerTexture3', _playerLuukPngDefault.default).add('robotTexture', _robot1PngDefault.default).add("backgroundTexture", _levelPngDefault.default).add("damageSound", _impact1WavDefault.default).add("hitSound", _hitHurt2WavDefault.default).add("swingSound", _shoot5WavDefault.default).add("deathSound", _explode2WavDefault.default);
         this.loader.load(()=>this.startGame()
         );
     }
@@ -576,6 +584,10 @@ class Game {
             robot1.randomLocation();
             this.robot1s.push(robot1);
         }
+        this.damageSound = this.loader.resources["damageSound"].data;
+        this.hitSound = this.loader.resources["hitSound"].data;
+        this.swingSound = this.loader.resources["swingSound"].data;
+        this.deathSound = this.loader.resources["deathSound"].data;
         this.player = new _player.Player(this.loader.resources["playerTexture1"].texture, this.loader.resources["playerTexture2"].texture, this.loader.resources["playerTexture3"].texture, 1, this, this.levelWidth, this.levelHeight);
         this.app.stage.addChild(this.player);
         this.ui = new _ui.UI(this);
@@ -593,9 +605,11 @@ class Game {
                     );
                     robot1.destroy();
                     this.ui.addKillXP();
+                    this.damageSound.play();
                 } else {
                     robot1.randomLocation();
                     this.ui.substractHalfBar();
+                    this.hitSound.play();
                 }
             }
         }
@@ -614,7 +628,7 @@ class Game {
 }
 new Game();
 
-},{"pixi.js":"dsYej","./Player":"jcdvt","./Robot1":"hufPl","./UI":"jZ6xA","../img/player_luuk_sword.png":"4o6lL","../img/player_test.png":"fscwk","../img/player_luuk.png":"2Wxrh","../img/robot1.png":"ibhqf","../img/level.png":"k8vMw","./Background":"fFYmR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./Player":"jcdvt","./Robot1":"hufPl","./UI":"jZ6xA","../img/player_luuk_sword.png":"4o6lL","../img/player_test.png":"fscwk","../img/player_luuk.png":"2Wxrh","../img/robot1.png":"ibhqf","../img/level.png":"k8vMw","./Background":"fFYmR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../audio/impact1.wav":"d7uxc","url:../audio/Hit_Hurt2.wav":"dGMe2","url:../audio/Shoot5.wav":"bJRZU","url:../audio/Explode2.wav":"17XKw"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37207,6 +37221,7 @@ class Player extends _pixiJs.Sprite {
             case "J":
                 this.isAttacking = true;
                 this.speedMult = 1.5;
+                this.game.swingSound.play();
                 const myfilter = new _pixiJs.filters.ColorMatrixFilter();
                 this.filters = [
                     myfilter
@@ -37375,7 +37390,10 @@ class UI {
     }
     update() {
         this.basicText.text = `Energypoints: ${this.hp} | XP: ${this.xp}`;
-        if (this.hp == 0) this.game.gameOver();
+        if (this.hp == 0) {
+            this.game.gameOver();
+            this.game.deathSound.play();
+        }
     }
 }
 
@@ -37444,6 +37462,18 @@ class Background extends _pixiJs.Sprite {
     }
 }
 
-},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["d0iXr","iZsgX"], "iZsgX", "parcelRequire216e")
+},{"pixi.js":"dsYej","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d7uxc":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('beD2O') + "impact1.9fbe5a99.wav" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"dGMe2":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('beD2O') + "Hit_Hurt2.53b164a1.wav" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"bJRZU":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('beD2O') + "Shoot5.bb3e9c40.wav" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"17XKw":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('beD2O') + "Explode2.21d7501f.wav" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}]},["d0iXr","iZsgX"], "iZsgX", "parcelRequire216e")
 
 //# sourceMappingURL=index.7a5f8dca.js.map

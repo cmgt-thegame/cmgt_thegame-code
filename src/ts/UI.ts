@@ -113,6 +113,7 @@ export class UI {
 
         if (this.hp == 0) {
             this.game.gameOver();
+            this.game.deathSound.play();
         }
     }
 }

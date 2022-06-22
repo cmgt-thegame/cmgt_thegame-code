@@ -4,12 +4,17 @@ import { Player } from './Player'
 import { Robot1 } from './Robot1'
 import { UI } from './UI'
 
-import playerImage1 from "../img/player_luuk_sword.png"
-import playerImage2 from "../img/player_test.png"
-import playerImage3 from "../img/player_luuk.png"
-import robotImage from "../img/robot1.png"
+import playerImage1 from "../img/player_luuk_sword.png";
+import playerImage2 from "../img/player_test.png";
+import playerImage3 from "../img/player_luuk.png";
+import robotImage from "../img/robot1.png";
 import bgImage from "../img/level.png";
-import { Background } from './Background'
+import { Background } from './Background';
+
+import damageSound from "url:../audio/impact1.wav";
+import hitSound from "url:../audio/Hit_Hurt2.wav";
+import swingSound from "url:../audio/Shoot5.wav";
+import deathSound from "url:../audio/Explode2.wav";
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
@@ -27,9 +32,14 @@ export class Game {
     private player : Player;
     // robot1 : Robot1
     
-    private background: Background;
-
+    private background : Background;
     private ui : UI;
+
+    public damageSound : HTMLAudioElement;
+    public hitSound : HTMLAudioElement;
+    public swingSound : HTMLAudioElement;
+    public deathSound : HTMLAudioElement;
+    
     constructor() {
         // create a app canvas
         this.app = new PIXI.Application({ backgroundColor: 0x372840, width: this.frameWidth, height: this.framelHeight })
@@ -42,7 +52,11 @@ export class Game {
             .add('playerTexture2', playerImage2)
             .add('playerTexture3', playerImage3)
             .add('robotTexture', robotImage)
-            .add("backgroundTexture", bgImage);
+            .add("backgroundTexture", bgImage)
+            .add("damageSound", damageSound)
+            .add("hitSound", hitSound)
+            .add("swingSound", swingSound)
+            .add("deathSound", deathSound);
         this.loader.load(()=>this.startGame())
     }
 
@@ -59,6 +73,10 @@ export class Game {
             this.robot1s.push(robot1)
         }
 
+        this.damageSound = this.loader.resources["damageSound"].data!
+        this.hitSound = this.loader.resources["hitSound"].data!
+        this.swingSound = this.loader.resources["swingSound"].data!
+        this.deathSound = this.loader.resources["deathSound"].data!
 
         this.player = new Player(this.loader.resources["playerTexture1"].texture!, 
         this.loader.resources["playerTexture2"].texture!, 
@@ -83,9 +101,11 @@ export class Game {
                     this.robot1s = this.robot1s.filter(r => r != robot1)
                     robot1.destroy();
                     this.ui.addKillXP();
+                    this.damageSound.play();
                 } else {
                     robot1.randomLocation();
                     this.ui.substractHalfBar();
+                    this.hitSound.play();
                 }
                 
             }

@@ -101,6 +101,8 @@ export class Player extends PIXI.Sprite {
                 this.isAttacking = true
                 this.speedMult = 1.5
 
+                this.game.swingSound.play();
+
                 const myfilter = new PIXI.filters.ColorMatrixFilter()
                 this.filters = [myfilter]
                 myfilter.predator(0.2, false)

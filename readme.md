@@ -20,6 +20,11 @@ npm run build
 
 ## Changelog
 
+v0.3.0
+- add audio
+- add gameover and winscreen
+- add xp & energypoint bar changing
+
 v0.2.0
 - update robot1 ai
 - implement killing enemy
