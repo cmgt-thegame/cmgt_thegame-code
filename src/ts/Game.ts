@@ -100,7 +100,7 @@ export class Game {
         this.ui = new UI(this)
 
         this.backgroundSound.play();
-        // this.backgroundSound.volume = 0.5
+        this.backgroundSound.volume = 0.4
 
         this.app.ticker.add((delta) => this.update(delta))
     }
