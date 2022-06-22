@@ -117,11 +117,12 @@ export class Game {
                     this.robot1s = this.robot1s.filter(r => r != robot1)
                     robot1.destroy();
                     this.ui.addKillXP();
-                    this.damageSound.play();
+                    this.hitSound.play();
                 } else {
                     robot1.randomLocation();
                     this.ui.substractHalfBar();
-                    this.hitSound.play();
+                    this.damageSound.play();
+                    this.damageSound.volume = 0.9;
                 }
                 
             }
@@ -134,6 +135,7 @@ export class Game {
 
     gameOver(){
         console.log("GAMEOVER")
+        this.backgroundSound.pause();
         this.app.stop()
         this.ui.showGameOver()
     }

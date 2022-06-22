@@ -99,7 +99,7 @@ export class Player extends PIXI.Sprite {
             case " ":
             case "J":
                 this.isAttacking = true
-                this.speedMult = 1.5
+                this.speedMult = 2
 
                 this.game.swingSound.play();
 

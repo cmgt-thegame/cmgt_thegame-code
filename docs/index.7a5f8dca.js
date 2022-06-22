@@ -616,11 +616,12 @@ class Game {
                     );
                     robot1.destroy();
                     this.ui.addKillXP();
-                    this.damageSound.play();
+                    this.hitSound.play();
                 } else {
                     robot1.randomLocation();
                     this.ui.substractHalfBar();
-                    this.hitSound.play();
+                    this.damageSound.play();
+                    this.damageSound.volume = 0.9;
                 }
             }
         }
@@ -628,6 +629,7 @@ class Game {
     }
     gameOver() {
         console.log("GAMEOVER");
+        this.backgroundSound.pause();
         this.app.stop();
         this.ui.showGameOver();
     }
@@ -37234,7 +37236,7 @@ class Player extends _pixiJs.Sprite {
             case " ":
             case "J":
                 this.isAttacking = true;
-                this.speedMult = 1.5;
+                this.speedMult = 2;
                 this.game.swingSound.play();
                 const myfilter = new _pixiJs.filters.ColorMatrixFilter();
                 this.filters = [
