@@ -592,9 +592,19 @@ class Game {
                     this.robot1s = this.robot1s.filter((r)=>r != robot1
                     );
                     robot1.destroy();
-                } else robot1.randomLocation();
+                    this.ui.addKillXP();
+                } else {
+                    robot1.randomLocation();
+                    this.ui.substractHalfBar();
+                }
             }
         }
+        if (this.robot1s.length == 0) this.ui.showWin();
+    }
+    gameOver() {
+        console.log("GAMEOVER");
+        this.app.stop();
+        this.ui.showGameOver();
     }
     collision(sprite1, sprite2) {
         const bounds1 = sprite1.getBounds();
@@ -37294,9 +37304,13 @@ parcelHelpers.export(exports, "UI", ()=>UI
 );
 var _pixiJs = require("pixi.js");
 class UI {
+    hiscore = 0;
     constructor(game){
         this.game = game;
-        this.xp = 2;
+        this.centerx = game.app.screen.width / 2;
+        this.centery = game.app.screen.height / 2;
+        this.xp = 0;
+        this.hp = 6;
         this.graphics = new _pixiJs.Graphics();
         this.graphics.beginFill(0x524a63);
         this.graphics.drawRect(40, 20, 500, 60);
@@ -37310,10 +37324,58 @@ class UI {
         this.basicText.x = 50;
         this.basicText.y = 30;
         this.game.app.stage.addChild(this.basicText);
+        const gameOverStyle = new _pixiJs.TextStyle({
+            fontFamily: 'Roboto',
+            fontSize: 70,
+            align: "center",
+            fontWeight: 'bold',
+            fill: [
+                '#372840'
+            ],
+            wordWrap: true,
+            wordWrapWidth: 420
+        });
+        this.messageField = new _pixiJs.Text('', gameOverStyle);
+        this.messageField.x = this.centerx - 200;
+        this.messageField.y = this.centery - 200;
+    // this.gameOverListener = (e:Event) => this.restartGame(e)
+    }
+    substractHalfBar() {
+        if (this.hp > 0) this.hp -= 1;
+    }
+    addKillXP() {
+        this.xp += 100;
+    }
+    showGameOver() {
+        this.graphics2 = new _pixiJs.Graphics();
+        this.graphics2.beginFill(0xdfeded);
+        this.graphics2.drawRect(600, 200, 675, 375);
+        this.graphics2.endFill();
+        this.game.app.stage.addChild(this.graphics2);
+        if (this.xp >= this.hiscore) this.hiscore = this.xp;
+        this.game.app.stage.addChild(this.messageField);
+        // this.messageField.text =  "GAME OVER press to restart"
+        this.messageField.text = `GAME OVER High Score : ${this.hiscore} XP`;
+    // window.addEventListener("keydown", this.gameOverListener)
+    }
+    // private restartGame(e:Event){
+    //     window.removeEventListener("keydown", this.gameOverListener)
+    //     this.game.restart()
+    // }
+    showWin() {
+        this.graphics2 = new _pixiJs.Graphics();
+        this.graphics2.beginFill(0xdfeded);
+        this.graphics2.drawRect(600, 200, 675, 375);
+        this.graphics2.endFill();
+        this.game.app.stage.addChild(this.graphics2);
+        if (this.xp >= this.hiscore) this.hiscore = this.xp;
+        this.game.app.stage.addChild(this.messageField);
+        // this.messageField.text =  "GAME OVER press to restart"
+        this.messageField.text = `YOU WON!! High Score : ${this.hiscore} XP`;
     }
     update() {
-        this.basicText.text = `XP: ${this.xp} Energy: XX-`;
-    // this.xp += 1
+        this.basicText.text = `Energypoints: ${this.hp} | XP: ${this.xp}`;
+        if (this.hp == 0) this.game.gameOver();
     }
 }
 

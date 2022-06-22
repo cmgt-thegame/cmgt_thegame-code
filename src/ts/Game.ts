@@ -82,12 +82,24 @@ export class Game {
                 if(this.player.isAttacking) {
                     this.robot1s = this.robot1s.filter(r => r != robot1)
                     robot1.destroy();
+                    this.ui.addKillXP();
                 } else {
                     robot1.randomLocation();
+                    this.ui.substractHalfBar();
                 }
                 
             }
         }
+
+        if (this.robot1s.length == 0) {
+            this.ui.showWin();
+        }
+    }
+
+    gameOver(){
+        console.log("GAMEOVER")
+        this.app.stop()
+        this.ui.showGameOver()
     }
 
     collision(sprite1 : PIXI.Sprite, sprite2 : PIXI.Sprite) {
