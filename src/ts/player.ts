@@ -98,6 +98,7 @@ export class Player extends PIXI.Sprite {
                 break;
             case " ":
             case "J":
+            case "ENTER":
                 this.isAttacking = true
                 this.speedMult = 2
 
@@ -129,6 +130,7 @@ export class Player extends PIXI.Sprite {
                 break;
             case " ":
             case "J":
+            case "ENTER":
                 this.isAttacking = false
                 this.speedMult = 2.5
 
