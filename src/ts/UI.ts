@@ -75,6 +75,7 @@ export class UI {
     }
 
     public showGameOver(){
+        this.game.deathSound.play();
         this.graphics2 = new PIXI.Graphics()
         this.graphics2.beginFill(0xdfeded)
         this.graphics2.drawRect(600, 200, 675, 375)
@@ -95,6 +96,7 @@ export class UI {
     // }
     
     public showWin(){
+        this.game.winSound.play();
         this.graphics2 = new PIXI.Graphics()
         this.graphics2.beginFill(0xdfeded)
         this.graphics2.drawRect(600, 200, 675, 375)
@@ -113,7 +115,6 @@ export class UI {
 
         if (this.hp == 0) {
             this.game.gameOver();
-            this.game.deathSound.play();
         }
     }
 }

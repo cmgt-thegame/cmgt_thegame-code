@@ -15,6 +15,8 @@ import damageSound from "url:../audio/impact1.wav";
 import hitSound from "url:../audio/Hit_Hurt2.wav";
 import swingSound from "url:../audio/Shoot5.wav";
 import deathSound from "url:../audio/Explode2.wav";
+import winSound from "url:../audio/Random5.wav";
+import backgroundSound from "url:../audio/backgroundmusic.mp3";
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
@@ -32,6 +34,8 @@ export class Game {
     private player : Player;
     // robot1 : Robot1
     
+    private enemyAmount : number = 10;
+
     private background : Background;
     private ui : UI;
 
@@ -39,6 +43,9 @@ export class Game {
     public hitSound : HTMLAudioElement;
     public swingSound : HTMLAudioElement;
     public deathSound : HTMLAudioElement;
+    public winSound : HTMLAudioElement;
+
+    public backgroundSound : HTMLAudioElement;
     
     constructor() {
         // create a app canvas
@@ -56,17 +63,21 @@ export class Game {
             .add("damageSound", damageSound)
             .add("hitSound", hitSound)
             .add("swingSound", swingSound)
-            .add("deathSound", deathSound);
+            .add("deathSound", deathSound)
+            .add("winSound", winSound)
+            .add("backgroundSound", backgroundSound);
         this.loader.load(()=>this.startGame())
     }
 
     private startGame() {
         console.log("starting the game")
 
+        this.enemyAmount = this.randomInt(5,25)
+
         this.background = new Background(this.loader.resources["backgroundTexture"].texture!)
         this.app.stage.addChild(this.background);
 
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < this.enemyAmount; i++) {
             let robot1 = new Robot1(this.loader.resources["robotTexture"].texture!, this)
             this.app.stage.addChild(robot1)
             robot1.randomLocation()
@@ -77,6 +88,8 @@ export class Game {
         this.hitSound = this.loader.resources["hitSound"].data!
         this.swingSound = this.loader.resources["swingSound"].data!
         this.deathSound = this.loader.resources["deathSound"].data!
+        this.winSound = this.loader.resources["winSound"].data!
+        this.backgroundSound = this.loader.resources["backgroundSound"].data!
 
         this.player = new Player(this.loader.resources["playerTexture1"].texture!, 
         this.loader.resources["playerTexture2"].texture!, 
@@ -85,6 +98,9 @@ export class Game {
         this.app.stage.addChild(this.player);
 
         this.ui = new UI(this)
+
+        this.backgroundSound.play();
+        // this.backgroundSound.volume = 0.5
 
         this.app.ticker.add((delta) => this.update(delta))
     }
@@ -133,6 +149,10 @@ export class Game {
             bounds1.y + bounds1.height > bounds2.y
         );
     }
+
+    randomInt(min : number, max: number) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
 
 }
 
