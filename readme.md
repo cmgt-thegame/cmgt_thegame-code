@@ -21,6 +21,7 @@ npm run build
 ## Changelog
 
 v0.3.0
+- small gameplay tweaks
 - added audio
 - added gameover and winscreen
 - added xp & energypoint bar changing
